@@ -1,0 +1,10 @@
+/* Movies.css */
+
+.movies {
+    flex-basis: 80%;
+    display: flex;
+    flex-wrap: wrap;
+  
+    margin: 0;
+    padding: 20px 0;
+  }
