@@ -5,7 +5,7 @@ import "./Header.css";
 
 const Header = () => (
   <header>
-    <h1>Exia Start</h1>
+    <h1>Exia Raiser</h1>
   </header>
 );
 

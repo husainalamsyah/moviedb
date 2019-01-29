@@ -1,0 +1,17 @@
+/* Selection.css */
+
+.selection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+  
+  .selection label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .selection select {
+    max-width: 150px;
+  }
