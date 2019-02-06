@@ -4,7 +4,8 @@ import React from "react";
 import "./Main.css"
 import Navigation from "./navigation/Navigation";
 import Movies from "./movies/Movies";
-
+// import Header from "./header/Header";
+// import NotFound from "./NotFound";
 
 class Main extends React.Component {
   state = {
@@ -46,6 +47,9 @@ class Main extends React.Component {
     if (this.state.moviesUrl !== nextState.moviesUrl) {
       this.fetchMovies(nextState.moviesUrl);
     }
+    if (this.state.page !== nextState.page) {
+      this.generateUrl();
+    }
   }
 
   onGenreChange = event => {
@@ -86,7 +90,16 @@ class Main extends React.Component {
   }
 
   onSearchButtonClick = () => {
+    this.setState({page: 1});
     this.generateUrl();
+  }
+
+  saveStateToLocalStorage = params => {
+    localStorage.setItem("exiaraiser.params", JSON.stringify(this.state));
+  }
+
+  getStateFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem("exiaraiser.params"));
   }
 
   fetchMovies = (url) => {
@@ -112,6 +125,21 @@ class Main extends React.Component {
     this.setState({ movies, total_pages: data.total_pages });
   };
 
+  onPageIncrease = () => {
+    const { page, total_pages } = this.state
+    const nextPage = page + 1;
+    if (nextPage <= total_pages) {
+      this.setState({ page: nextPage })
+    }
+  }
+
+  onPageDecrease = () => {
+    const nextPage = this.state.page - 1;
+    if ( nextPage > 0 ) {
+      this.setState({ page: nextPage })
+    }
+  }
+
   render() {
     return (
       <section className="main">
@@ -121,7 +149,12 @@ class Main extends React.Component {
           setGenres={this.setGenres} 
           onSearchButtonClick={this.onSearchButtonClick}
           {...this.state} />
-        <Movies movies={this.state.movies}/>
+        <Movies 
+          movies={this.state.movies}
+          page={this.state.page}
+          onPageIncrease={this.onPageIncrease}
+          onPageDecrease={this.onPageDecrease}
+        />
       </section>
     )
   }
